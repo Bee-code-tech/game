@@ -173,11 +173,11 @@ const GameCashTeaser: React.FC = () => {
 
             {/* Benefits List */}
             <motion.div variants={itemVariants} className="mb-8 sm:mb-10">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+              <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
                 {[
-                  { icon: '✅', text: 'No capital', color: 'text-green-400' },
-                  { icon: '✅', text: 'No referrals', color: 'text-cyan-400' },
-                  { icon: '✅', text: 'No stress', color: 'text-purple-400' }
+                  { icon: '', text: 'No capital', color: 'text-green-400' },
+                  { icon: '', text: 'No referrals', color: 'text-cyan-400' },
+                  { icon: '', text: 'No stress', color: 'text-purple-400' }
                 ].map((benefit, index) => (
                   <motion.div
                     key={index}
@@ -232,6 +232,7 @@ const GameCashTeaser: React.FC = () => {
             </motion.div>
 
             {/* CTA Button */}
+            <a href="https://chat.whatsapp.com/CJTj9bjKs4R5FEtjnRtRL0">
             <motion.div variants={itemVariants} className="mb-12 sm:mb-16">
               <motion.button
                 variants={buttonVariants}
@@ -262,6 +263,7 @@ const GameCashTeaser: React.FC = () => {
                 </span>
               </motion.button>
             </motion.div>
+            </a>
 
             {/* Earnings Showcase */}
             <motion.div variants={itemVariants} className="mb-8">
