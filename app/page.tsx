@@ -266,7 +266,7 @@ const GameCashTeaser: React.FC = () => {
             </a>
 
             {/* Earnings Showcase */}
-            <motion.div variants={itemVariants} className="mb-8">
+            {/* <motion.div variants={itemVariants} className="mb-8">
               <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 backdrop-blur-sm border border-green-400/20 rounded-2xl px-6 py-4 max-w-2xl mx-auto">
                 <div className="text-green-300 text-sm mb-2 font-medium">💰 Today's Top Earners</div>
                 <div className="flex justify-between items-center text-white">
@@ -288,10 +288,10 @@ const GameCashTeaser: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </motion.div> */}
 
             {/* Trust Indicators */}
-            <motion.div variants={itemVariants} className="text-center">
+            {/* <motion.div variants={itemVariants} className="text-center">
               <div className="bg-black/20 backdrop-blur-sm rounded-2xl px-6 py-4 inline-block border border-white/10">
                 <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8 text-white">
                   <div className="flex items-center">
@@ -308,7 +308,7 @@ const GameCashTeaser: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </motion.div> */}
           </div>
         </div>
       </motion.div>
