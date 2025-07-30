@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
+import Link from 'next/link';
 
 const GameCashTeaser: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState<number>(180);
@@ -232,7 +233,7 @@ const GameCashTeaser: React.FC = () => {
             </motion.div>
 
             {/* CTA Button */}
-            <a href="https://chat.whatsapp.com/CJTj9bjKs4R5FEtjnRtRL0">
+            <Link href="https://chat.whatsapp.com/CJTj9bjKs4R5FEtjnRtRL0">
             <motion.div variants={itemVariants} className="mb-12 sm:mb-16">
               <motion.button
                 variants={buttonVariants}
@@ -263,7 +264,7 @@ const GameCashTeaser: React.FC = () => {
                 </span>
               </motion.button>
             </motion.div>
-            </a>
+            </Link>
 
             {/* Earnings Showcase */}
             {/* <motion.div variants={itemVariants} className="mb-8">
