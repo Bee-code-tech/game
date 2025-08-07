@@ -276,9 +276,9 @@ const GameCashTeaser: React.FC = () => {
             <motion.div variants={itemVariants} className="mb-8 sm:mb-10">
               <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
                 {[
-                  { icon: '✅', text: gameCashData.benefit1, color: 'text-green-400' },
-                  { icon: '✅', text: gameCashData.benefit2, color: 'text-cyan-400' },
-                  { icon: '✅', text: gameCashData.benefit3, color: 'text-purple-400' }
+                  { icon: '', text: gameCashData.benefit1, color: 'text-green-400' },
+                  { icon: '', text: gameCashData.benefit2, color: 'text-cyan-400' },
+                  { icon: '', text: gameCashData.benefit3, color: 'text-purple-400' }
                 ].map((benefit, index) => (
                   <motion.div
                     key={index}
@@ -295,7 +295,7 @@ const GameCashTeaser: React.FC = () => {
             </motion.div>
 
             {/* Countdown Timer */}
-            <motion.div variants={itemVariants} className="mb-8 sm:mb-10">
+            <motion.div variants={itemVariants} className="mb-4 sm:mb-10">
               <AnimatePresence>
                 {!isExpired ? (
                   <motion.div
