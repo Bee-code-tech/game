@@ -2,13 +2,57 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import Link from 'next/link';
+import { client } from '@/lib/sanity';
+
+interface GameCashData {
+  brandName: string;
+  brandHighlight: string;
+  badge: string;
+  badgeHot: string;
+  mainHeading: string;
+  highlightedText: string;
+  description1: string;
+  highlightedPhone: string;
+  description2: string;
+  bottomText: string;
+  benefit1: string;
+  benefit2: string;
+  benefit3: string;
+  whatsappLink: string;
+  expiredMessage: string;
+}
 
 const GameCashTeaser: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState<number>(180);
   const [isExpired, setIsExpired] = useState<boolean>(false);
+  const [gameCashData, setGameCashData] = useState<GameCashData | null>(null);
 
+  // Fetch GameCash data from Sanity
   useEffect(() => {
-    // Reset timer on page visit
+    client
+      .fetch(`*[_type == "gameCash"][0]{
+        brandName,
+        brandHighlight,
+        badge,
+        badgeHot,
+        mainHeading,
+        highlightedText,
+        description1,
+        highlightedPhone,
+        description2,
+        bottomText,
+        benefit1,
+        benefit2,
+        benefit3,
+        whatsappLink,
+        expiredMessage
+      }`)
+      .then((data: GameCashData) => setGameCashData(data))
+      .catch(console.error);
+  }, []);
+
+  // Simulated countdown - resets on every page refresh
+  useEffect(() => {
     setTimeLeft(180);
     setIsExpired(false);
     
@@ -86,7 +130,19 @@ const GameCashTeaser: React.FC = () => {
     }
   };
 
+  // Static game icons (as requested)
   const gameIcons = ['🎮', '🕹️', '🎯', '🎲', '🃏', '🎰'];
+
+  // Loading state
+  if (!gameCashData) {
+    return (
+      <div className="h-screen w-full bg-gradient-to-br from-slate-900 via-purple-900 to-cyan-900 relative overflow-hidden">
+        <div className="flex items-center justify-center h-full">
+          <div className="animate-pulse text-white">Loading...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen w-full bg-gradient-to-br from-slate-900 via-purple-900 to-cyan-900 relative overflow-hidden">
@@ -99,7 +155,7 @@ const GameCashTeaser: React.FC = () => {
         <div className="absolute bottom-10 left-1/4 w-64 h-64 bg-gradient-to-br from-indigo-400/20 to-purple-400/20 rounded-full blur-2xl opacity-40 animate-pulse delay-1000"></div>
       </div>
 
-      {/* Floating Game Icons */}
+      {/* Floating Game Icons - Static */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {gameIcons.map((icon, index) => (
           <motion.div
@@ -127,7 +183,7 @@ const GameCashTeaser: React.FC = () => {
         {/* Header with Logo */}
         <motion.header variants={itemVariants} className="flex justify-between items-center mb-8 sm:mb-12 lg:mb-16">
           <div className="text-xl sm:text-2xl font-bold text-white">
-            <span className="text-green-400">GameCash</span> Pro
+            <span className="text-green-400">{gameCashData.brandHighlight}</span> {gameCashData.brandName}
           </div>
           <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
             <span className="text-white text-lg sm:text-xl">🎮</span>
@@ -141,10 +197,10 @@ const GameCashTeaser: React.FC = () => {
             <motion.div variants={itemVariants} className="mb-6">
               <div className="inline-flex items-center bg-gradient-to-r from-green-400/20 to-emerald-400/20 border border-green-400/30 rounded-full px-4 sm:px-6 py-2 sm:py-3">
                 <span className="text-green-300 font-semibold text-sm sm:text-base mr-2">
-                  🎮💸 NEW OPPORTUNITY
+                  {gameCashData.badge}
                 </span>
                 <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full font-bold">
-                  HOT
+                  {gameCashData.badgeHot}
                 </span>
               </div>
             </motion.div>
@@ -152,9 +208,9 @@ const GameCashTeaser: React.FC = () => {
             {/* Main Heading */}
             <motion.div variants={itemVariants} className="mb-6 sm:mb-8">
               <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-4">
-                Get Paid to{' '}
+                {gameCashData.mainHeading}{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400">
-                  Play Games
+                  {gameCashData.highlightedText}
                 </span>{' '}
                 <br />
                 on Your Phone!
@@ -163,12 +219,12 @@ const GameCashTeaser: React.FC = () => {
 
             {/* Subheading */}
             <motion.p variants={itemVariants} className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 mb-8 sm:mb-10 lg:mb-12 max-w-3xl mx-auto leading-relaxed">
-              No experience needed. Just your{' '}
-              <span className="text-cyan-400 font-semibold">smartphone + data</span>{' '}
-              = 💰 daily earnings!
+              {gameCashData.description1}{' '}
+              <span className="text-cyan-400 font-semibold">{gameCashData.highlightedPhone}</span>{' '}
+              = 💰 {gameCashData.description2}
               <br />
               <span className="text-green-400 font-semibold">
-                Thousands are already cashing out, why not you?
+                {gameCashData.bottomText}
               </span>
             </motion.p>
 
@@ -176,9 +232,9 @@ const GameCashTeaser: React.FC = () => {
             <motion.div variants={itemVariants} className="mb-8 sm:mb-10">
               <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
                 {[
-                  { icon: '', text: 'No capital', color: 'text-green-400' },
-                  { icon: '', text: 'No referrals', color: 'text-cyan-400' },
-                  { icon: '', text: 'No stress', color: 'text-purple-400' }
+                  { icon: '✅', text: gameCashData.benefit1, color: 'text-green-400' },
+                  { icon: '✅', text: gameCashData.benefit2, color: 'text-cyan-400' },
+                  { icon: '✅', text: gameCashData.benefit3, color: 'text-purple-400' }
                 ].map((benefit, index) => (
                   <motion.div
                     key={index}
@@ -225,7 +281,7 @@ const GameCashTeaser: React.FC = () => {
                       className="w-2 h-2 sm:w-3 sm:h-3 bg-orange-500 rounded-full mr-2 sm:mr-3"
                     ></motion.div>
                     <span className="text-orange-300 font-medium text-sm sm:text-base lg:text-lg">
-                      💰 Start Earning Now - Join Today!
+                      {gameCashData.expiredMessage}
                     </span>
                   </motion.div>
                 )}
@@ -233,7 +289,7 @@ const GameCashTeaser: React.FC = () => {
             </motion.div>
 
             {/* CTA Button */}
-            <Link href="https://chat.whatsapp.com/CJTj9bjKs4R5FEtjnRtRL0">
+            <Link href={gameCashData.whatsappLink}>
             <motion.div variants={itemVariants} className="mb-12 sm:mb-16">
               <motion.button
                 variants={buttonVariants}
@@ -265,51 +321,6 @@ const GameCashTeaser: React.FC = () => {
               </motion.button>
             </motion.div>
             </Link>
-
-            {/* Earnings Showcase */}
-            {/* <motion.div variants={itemVariants} className="mb-8">
-              <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 backdrop-blur-sm border border-green-400/20 rounded-2xl px-6 py-4 max-w-2xl mx-auto">
-                <div className="text-green-300 text-sm mb-2 font-medium">💰 Today's Top Earners</div>
-                <div className="flex justify-between items-center text-white">
-                  <div className="text-center">
-                    <div className="text-lg sm:text-xl font-bold text-green-400">₦15,000</div>
-                    <div className="text-xs text-gray-300">Sarah M.</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-lg sm:text-xl font-bold text-cyan-400">₦12,500</div>
-                    <div className="text-xs text-gray-300">David K.</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-lg sm:text-xl font-bold text-purple-400">₦18,200</div>
-                    <div className="text-xs text-gray-300">Amina J.</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-lg sm:text-xl font-bold text-yellow-400">₦9,800</div>
-                    <div className="text-xs text-gray-300">John O.</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div> */}
-
-            {/* Trust Indicators */}
-            {/* <motion.div variants={itemVariants} className="text-center">
-              <div className="bg-black/20 backdrop-blur-sm rounded-2xl px-6 py-4 inline-block border border-white/10">
-                <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8 text-white">
-                  <div className="flex items-center">
-                    <span className="text-green-400 mr-2 text-lg">🎮</span>
-                    <span className="text-sm font-medium">50+ Games Available</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-cyan-400 mr-2 text-lg">👥</span>
-                    <span className="text-sm font-medium">10,000+ Active Players</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-yellow-400 mr-2 text-lg">💰</span>
-                    <span className="text-sm font-medium">Daily Payouts</span>
-                  </div>
-                </div>
-              </div>
-            </motion.div> */}
           </div>
         </div>
       </motion.div>
