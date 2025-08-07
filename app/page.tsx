@@ -286,7 +286,6 @@ const GameCashTeaser: React.FC = () => {
                     whileHover={{ scale: 1.05 }}
                   >
                     <div className="flex items-center justify-center space-x-2">
-                      <span className="text-xl">{benefit.icon}</span>
                       <span className={`font-semibold ${benefit.color}`}>{benefit.text}</span>
                     </div>
                   </motion.div>
