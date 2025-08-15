@@ -171,7 +171,6 @@ const GameCashTeaser: React.FC = () => {
     }
   };
 
-  // Static game icons
   const gameIcons = ['🎮', '🕹️', '🎯', '🎲', '🃏', '🎰'];
 
   // Loading state
