@@ -1,7 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
-import Link from 'next/link';
 import { client } from '@/lib/sanity';
 import { useRouter } from "next/navigation";
 interface GameCashData {
@@ -341,37 +340,36 @@ const GameCashTeaser: React.FC = () => {
               </AnimatePresence>
             </motion.div>
 
-            {/* Dynamic CTA Button */}
-            <Link href={gameCashData.buttonLink}>
-              <motion.div variants={itemVariants} className="mb-12 sm:mb-16">
-                <motion.button
-                  variants={dynamicButtonVariants}
-                  initial="idle"
-                  whileHover="hover"
-                  whileTap="tap"
-                  className={`${buttonStyles.gradient} text-white font-bold text-sm sm:text-lg lg:text-xl px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-6 rounded-full shadow-2xl border-2 ${buttonStyles.border} relative overflow-hidden group w-full sm:w-auto max-w-sm sm:max-w-none`}
-                  type="button"
-                >
+           {/* Dynamic CTA Button */}
+            <motion.div variants={itemVariants} className="mb-12 sm:mb-16">
+              <motion.button
+                onClick={() => handleCtaClick(gameCashData.buttonLink)}
+                variants={dynamicButtonVariants}
+                initial="idle"
+                whileHover="hover"
+                whileTap="tap"
+                className={`${buttonStyles.gradient} text-white font-bold text-sm sm:text-lg lg:text-xl px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-6 rounded-full shadow-2xl border-2 ${buttonStyles.border} relative overflow-hidden group w-full sm:w-auto max-w-sm sm:max-w-none`}
+                type="button"
+              >
+                <motion.div
+                  className={`absolute inset-0 bg-gradient-to-r ${buttonStyles.hoverGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "0%" }}
+                  transition={{ duration: 0.6 }}
+                />
+                <span className="relative z-10 flex items-center justify-center">
+                  {buttonStyles.icon}
+                  <span className="whitespace-nowrap">{gameCashData.buttonText}</span>
                   <motion.div
-                    className={`absolute inset-0 bg-gradient-to-r ${buttonStyles.hoverGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-                    initial={{ x: '-100%' }}
-                    whileHover={{ x: '0%' }}
-                    transition={{ duration: 0.6 }}
-                  ></motion.div>
-                  <span className="relative z-10 flex items-center justify-center">
-                    {buttonStyles.icon}
-                    <span className="whitespace-nowrap">{gameCashData.buttonText}</span>
-                    <motion.div
-                      className="ml-1 sm:ml-2 flex-shrink-0"
-                      animate={{ x: [0, 3, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      →
-                    </motion.div>
-                  </span>
-                </motion.button>
-              </motion.div>
-            </Link>
+                    className="ml-1 sm:ml-2 flex-shrink-0"
+                    animate={{ x: [0, 3, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    →
+                  </motion.div>
+                </span>
+              </motion.button>
+            </motion.div>
           </div>
         </div>
       </motion.div>
