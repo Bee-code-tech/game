@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import Link from 'next/link';
 import { client } from '@/lib/sanity';
-
+import { useRouter } from "next/navigation";
 interface GameCashData {
   brandName: string;
   brandHighlight: string;
@@ -27,6 +27,17 @@ const GameCashTeaser: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState<number>(180);
   const [isExpired, setIsExpired] = useState<boolean>(false);
   const [gameCashData, setGameCashData] = useState<GameCashData | null>(null);
+  const router = useRouter()
+
+  const handleCtaClick = (url: string) => {
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq("track", "Lead");
+    }
+    
+    setTimeout(() => {
+      router.push(url);
+    }, 300); 
+  };
 
   // Fetch GameCash data from Sanity
   useEffect(() => {
